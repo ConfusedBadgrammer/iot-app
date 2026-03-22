@@ -1,10 +1,13 @@
 import { supabase } from "../supabase.js";
 
 export class SensorController {
-  async testPost(req, res) {
-    const { temperature, humidity } = req.body;
+  async post(req, res) {
+    const { temperature, humidity, co2 } = req.body;
 
-    const { error } = await supabase.from("sensor_readings").insert([{ temperature, humidity }]);
+    const reading = {temperature, humidity};
+    if (co2 !== undefined) reading.co2 = co2;
+
+    const { error } = await supabase.from("sensor_readings").insert([ reading ]);
 
     if (error) {
       console.log(error);
@@ -13,4 +16,6 @@ export class SensorController {
 
     return res.sendStatus(200);
   }
+
+
 }

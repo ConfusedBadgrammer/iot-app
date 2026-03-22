@@ -14,9 +14,9 @@ export class MainRouter {
       res.json({ message: "Welcome to the API" });
     });
 
-    this.router.post("/test", (req, res) => {
+    this.router.post("/sensors", (req, res) => {
       console.log(req.body);
-      this.sensorController.testPost(req, res);
+      this.sensorController.post(req, res);
     });
   }
 
