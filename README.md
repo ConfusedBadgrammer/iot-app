@@ -60,70 +60,15 @@ Supabase. A React dashboard displays live sensor data and historical trends.
 
 ---
 
-## Project Structure
-
-```
-iot-app/
-├── backend/              # Node.js/Express API
-│   ├── controllers/      # SensorController — handles incoming payloads
-│   ├── routes/           # API route definitions
-│   ├── db/               # Supabase client setup
-│   └── index.js          # Entry point
-├── frontend/             # React dashboard
-│   ├── src/
-│   │   ├── components/   # Dashboard UI components
-│   │   └── main.jsx      # Entry point
-│   └── vite.config.js
-└── README.md
-```
-
 > **Note:** Firmware lives in a separate repository. See [Hardware & Firmware](#hardware--firmware) below.
 
 ---
-
-## Getting Started
 
 ### Prerequisites
 
 - Node.js 22+
 - A [Supabase](https://supabase.com) project (free tier works)
 - ESP-IDF v5+ (for firmware, separate repo currently not posted)
-
-### 1. Clone the repo
-
-```bash
-git clone https://github.com/ConfusedBadgrammer/iot-app.git
-cd iot-app
-```
-
-### 2. Backend setup
-
-```bash
-cd backend
-npm install
-```
-
-Create a `.env` file in `/backend`:
-
-```env
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_KEY=your_supabase_anon_or_service_key
-PORT=3000
-```
-
-```bash
-npm run dev
-```
-
-### 3. Frontend setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The dashboard will be available at `http://localhost:5173`.
 
 ---
 
