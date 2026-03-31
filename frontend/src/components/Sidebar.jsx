@@ -1,26 +1,18 @@
-import {
-  Cpu,
-  LayoutDashboard,
-  Leaf,
-  Lightbulb,
-  Settings,
-  ShieldCheck,
-  Thermometer,
-} from 'lucide-react'
+import { Cpu, LayoutDashboard, Leaf, Lightbulb, Settings, ShieldCheck, Thermometer } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 function Sidebar() {
   return (
-    <div className="bg-[#121B2F] w-64 text-[#95A2B9] flex flex-col h-screen tracking-wide antialiased">
+    <div className="bg-[#121B2F] w-64 text-[#95A2B9] flex flex-col h-screen tracking-none antialiased font-body text-[16px] font-medium">
       <div className="p-6 text-center">
         <span>LOGO</span>
       </div>
 
-      <nav className="pt-10 px-6 flex flex-col items-center">
+      <nav className="pt-10 px-6 flex flex-col items-center ">
         <ul className="flex flex-col gap-3">
           <Link to="/">
-            <li className="w-64 h-12 flex items-center pl-6 pr-4 cursor-pointer hover:bg-[#1E2A42] hover:text-cyan-300 rounded transition-colors duration-500">
-              <LayoutDashboard className="mr-2" />
+            <li className="w-64 h-12 flex items-center pl-6 pr-4 cursor-pointer hover:bg-[#1E2A42] hover:text-cyan-300 rounded transition-colors duration-500 ">
+              <LayoutDashboard className="mr-2 " />
               Dashboard
             </li>
           </Link>

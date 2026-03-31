@@ -17,9 +17,18 @@ export class App {
   }
 
   async start() {
-    this.app.listen(3000, () =>
-      console.log(new Date().toLocaleTimeString() + ` - Server running on port http://localhost:${process.env.PORT}/api/v1/`),
-    );
-    await testDBConnection();
+    const connection = await testDBConnection();
+
+    if (connection) {
+      this.app.listen(3000, () =>
+        console.log(
+          new Date().toLocaleTimeString() +
+            ` - Server running on port http://localhost:${process.env.PORT}/api/v1/`
+        )
+      );
+    } else {
+      console.error("Exiting: could not connect to database.");
+      process.exit(1);
+    }
   }
 }

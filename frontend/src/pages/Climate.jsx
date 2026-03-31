@@ -1,7 +1,7 @@
 function Climate() {
   return (
     <div>
-      <h1>Climate</h1>
+      <h1 className="font-bold text-2xl antialiased font-headline">Climate</h1>
     </div>
   )
 }
