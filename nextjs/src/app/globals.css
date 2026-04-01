@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-on-background);
+    font-family: var(--font-body);
+  }
+}
+
+@theme {
+  --color-background: #0b1326;
+  --color-on-background: #fffefe;
+
+  --font-headline: 'Space Grotesk', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-label: 'Inter', sans-serif;
+}
