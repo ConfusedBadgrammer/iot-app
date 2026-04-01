@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
 
 @layer base {
@@ -9,11 +9,11 @@
   }
 }
 
-@theme {
+@theme inline {
   --color-background: #0b1326;
   --color-on-background: #fffefe;
 
-  --font-headline: 'Space Grotesk', sans-serif;
-  --font-body: 'Manrope', sans-serif;
-  --font-label: 'Inter', sans-serif;
+  --font-headline: var(--font-space-grotesk);
+  --font-body: var(--font-manrope);
+  --font-label: var(--font-inter);
 }
