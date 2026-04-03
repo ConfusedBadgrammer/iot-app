@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
-// GET /api/devices/[device_id] — fetch device info and sensor readings
+// GET /api/devices/[device_id] — fetch device info and sensor readings in a range
 export async function GET(request, { params }) {
   const { device_id } = await params;
   const { searchParams } = new URL(request.url);

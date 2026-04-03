@@ -9,9 +9,14 @@
   }
 }
 
+* {
+  /* outline: 1px solid red; */
+}
+
 @theme inline {
   --color-background: #0b1326;
   --color-on-background: #fffefe;
+  --color-accent: #00dbf2;
 
   --font-headline: var(--font-space-grotesk);
   --font-body: var(--font-manrope);
