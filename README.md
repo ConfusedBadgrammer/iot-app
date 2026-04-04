@@ -186,6 +186,8 @@ built out.
 This project is documented through a series of development vlogs capturing the build
 process, hardware decisions, debugging sessions, and lessons learned along the way.
 
-📹 [Watch the dev vlogs on Loom](https://loom.com/share/folder/ec8a78009cf94fb4896e9990cbdad6c4)
+📹 [Watch the dev vlogs on Loom](https://loom.com/share/folder/ec8a78009cf94fb4896e9990cbdad6c4
+
+https://ambient-sandy.vercel.app/climate
 
 ---
