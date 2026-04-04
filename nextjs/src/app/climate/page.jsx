@@ -6,6 +6,8 @@ import ProgressBar from "@/components/ProgressBar";
 import SubNav from "@/components/SubNav";
 import { Droplet, Thermometer } from "lucide-react";
 import { calcDewPoint } from "@/lib/utils";
+import { useWeather } from "@/hooks/useWeather";
+import CircularProgressBar from "@/components/CircularProgressBar";
 
 const devices = [
   { mac: "88:57:21:95:51:F8", label: "Bedroom" },
@@ -15,17 +17,17 @@ const devices = [
 export default function Climate() {
   const [selectedMac, setSelectedMac] = useState(devices[0].mac);
   const [sensorData, setSensorData] = useState(null);
-  const [weatherData, setWeatherData] = useState(null);
+  const weatherData = useWeather();
   const [oneHrSensorData, setOneHrSensorData] = useState(null);
   const dewPoint = sensorData
     ? calcDewPoint(sensorData.temperature, sensorData.humidity)
     : null;
+  const oneHrDewPoint = oneHrSensorData
+    ? calcDewPoint(oneHrSensorData.temperature, oneHrSensorData.humidity)
+    : null;
 
   useEffect(() => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/readings/${selectedMac}/latest`,
-      { cache: "no-store" },
-    )
+    fetch(`/api/readings/${selectedMac}/latest`, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => setSensorData(data));
   }, [selectedMac]);
@@ -34,10 +36,9 @@ export default function Climate() {
     const from = new Date(Date.now() - 65 * 60 * 1000).toISOString();
     const to = new Date(Date.now() - 55 * 60 * 1000).toISOString();
 
-    fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/readings/${selectedMac}?from=${from}&to=${to}`,
-      { cache: "no-store" },
-    )
+    fetch(`/api/readings/${selectedMac}?from=${from}&to=${to}`, {
+      cache: "no-store",
+    })
       .then((res) => res.json())
       .then((data) => {
         if (!data.readings?.length) return;
@@ -52,15 +53,11 @@ export default function Climate() {
       });
   }, [selectedMac]);
 
-  useEffect(() => {
-    fetch(
-      `https://weather.googleapis.com/v1/currentConditions:lookup?key=${process.env.NEXT_PUBLIC_GOOGLE_WEATHER_API}&location.latitude=${process.env.NEXT_PUBLIC_LATITUDE}&location.longitude=${process.env.NEXT_PUBLIC_LONGITUDE}`,
-    )
-      .then((res) => res.json())
-      .then((data) => setWeatherData(data));
-  }, []);
+  if (!sensorData && !weatherData) {
+    return <div>One second bruh...</div>;
+  }
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 flex-1">
       <div className="flex justify-between">
         <div className="flex flex-col">
           <div className="flex flex-col pb-8">
@@ -83,7 +80,7 @@ export default function Climate() {
             onSelect={setSelectedMac}
           />
         </div>
-        {weatherData && (
+        {weatherData?.temperature && (
           <Card className="w-60 h-39 p-3 bg-[#121B2F] justify-center items-center">
             <CardTitle>Outside</CardTitle>
 
@@ -94,7 +91,7 @@ export default function Climate() {
                 </label>
                 <div className="flex">
                   <p className="text-2xl">
-                    {weatherData.temperature.degrees}{" "}
+                    {weatherData.temperature.degrees}
                     <span className="text-sm text-[#94A3B9]">°C</span>
                   </p>
                 </div>
@@ -120,7 +117,7 @@ export default function Climate() {
               Thermal Balance
             </CardTitle>
             <CardBody className="flex justify-center items-center flex-1 flex-col">
-              <p className="text-6xl flex gap-2">
+              <div className="text-6xl flex gap-2">
                 {sensorData.temperature}
                 <div className="flex flex-col-reverse">
                   <span className="text-2xl text-[#94A3B9]">°C</span>
@@ -138,12 +135,16 @@ export default function Climate() {
                     }
                   })()}
                 </div>
-              </p>
+              </div>
             </CardBody>
             <ProgressBar
               value={sensorData.temperature}
-              max={weatherData ? weatherData.temperature.degrees * 2 : 30}
-              marker={weatherData?.temperature.degrees}
+              max={
+                weatherData?.temperature
+                  ? weatherData.temperature.degrees * 2
+                  : 30
+              }
+              marker={weatherData?.temperature?.degrees}
             />
           </Card>
 
@@ -152,7 +153,7 @@ export default function Climate() {
               Moisture Content
             </CardTitle>
             <CardBody className="flex justify-center items-center flex-1 flex-col">
-              <p className="text-6xl flex gap-2">
+              <div className="text-6xl flex gap-2">
                 {sensorData.humidity}
                 <div className="flex flex-col-reverse">
                   <span className="text-2xl text-[#94A3B9]"> %</span>
@@ -171,13 +172,16 @@ export default function Climate() {
                     }
                   })()}
                 </div>
-              </p>
+              </div>
             </CardBody>
-            <ProgressBar
-              color="var(--color-accent)"
-              value={sensorData.humidity}
-              max={100}
-            />
+            {weatherData?.temperature && (
+              <ProgressBar
+                color="var(--color-accent)"
+                value={sensorData.humidity}
+                max={100}
+                comparisonMarker={weatherData.relativeHumidity}
+              />
+            )}
           </Card>
 
           <Card className="flex-1 min-w-64 min-h-72">
@@ -200,7 +204,35 @@ export default function Climate() {
           </Card>
         </div>
       )}
-      <Card className="flex w-full"></Card>
+      <Card className="flex-1 w-full bg-[#121B2F] gap-4">
+        <CardTitle label="">Environmental Analysis</CardTitle>
+
+        <div className="flex flex-row gap-4 flex-1">
+          <div className="flex flex-col flex-1 min-w-64">
+            <Card className="flex-1 ">
+              <CardTitle label="DEW POINT">Thermal Comfort</CardTitle>
+              <div className="flex flex-1 items-center justify-center">
+                <CircularProgressBar
+                  value={dewPoint}
+                  min={0}
+                  max={20}
+                  unit="°C"
+                  strokeWidth={10}
+                  size={180}
+                  diff={
+                    dewPoint != null && oneHrDewPoint != null
+                      ? dewPoint - oneHrDewPoint
+                      : null
+                  }
+                />
+              </div>
+            </Card>
+          </div>
+          <Card className="flex-[2]">
+            <CardTitle label="HISTORICAL TRENDS">Overview</CardTitle>
+          </Card>
+        </div>
+      </Card>
     </div>
   );
 }

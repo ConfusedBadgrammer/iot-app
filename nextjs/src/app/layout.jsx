@@ -28,9 +28,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${manrope.variable} ${inter.variable}`}>
       <body>
-        <div className="flex">
+        <div className="flex min-h-screen">
           <Sidebar />
-          <main className="p-6 text-white w-full">{children}</main>
+          <main className="p-6 text-white w-full flex flex-col">{children}</main>
         </div>
       </body>
     </html>

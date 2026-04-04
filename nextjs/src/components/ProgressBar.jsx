@@ -1,6 +1,16 @@
-function ProgressBar({ value, max, color, marker, className = "" }) {
+function ProgressBar({
+  value,
+  max,
+  color,
+  marker,
+  comparisonMarker,
+  className = "",
+}) {
   const percent = Math.min((value / max) * 100, 100);
-  const markerPercent = marker != null ? Math.min((marker / max) * 100, 100) : null;
+  const markerPercent =
+    marker != null ? Math.min((marker / max) * 100, 100) : null;
+  const markerTwoPercent =
+    comparisonMarker != null ? Math.min((comparisonMarker / max) * 100, 100) : null;
   const fill = color ? { backgroundColor: color } : undefined;
   return (
     <div className="relative">
@@ -15,10 +25,18 @@ function ProgressBar({ value, max, color, marker, className = "" }) {
           className="absolute top-1/2 -translate-y-1/2 w-0.5 h-4 bg-white rounded"
           style={{ left: `${markerPercent}%` }}
         >
-          <span
-            className="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] text-[#94A3B9] whitespace-nowrap"
-          >
+          <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] text-[#94A3B9] whitespace-nowrap">
             {marker}°
+          </span>
+        </div>
+      )}
+      {markerTwoPercent != null && (
+        <div
+          className="absolute top-1/2 -translate-y-1/2 w-0.5 h-4 bg-white rounded"
+          style={{ left: `${markerTwoPercent}%` }}
+        >
+          <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[10px] text-[#94A3B9] whitespace-nowrap">
+            {comparisonMarker}°
           </span>
         </div>
       )}

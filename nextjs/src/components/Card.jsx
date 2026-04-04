@@ -2,7 +2,9 @@ import { cn } from "@/lib/utils";
 
 function Card({ className, children }) {
   return (
-    <div className={cn("flex flex-col p-6 pt-4 rounded bg-[#222B3C]", className)}>
+    <div
+      className={cn("flex flex-col p-6 pt-4 rounded bg-[#222B3C]", className)}
+    >
       {children}
     </div>
   );
@@ -13,7 +15,7 @@ function CardTitle({ className, children, label, icon }) {
     <div className="flex justify-between">
       <div>
         {label && (
-          <label className="text-[#94A3B9] font-label font-semibold text-[10px] tracking-tight">
+          <label className="text-[#94A3B9] font-label font-semibold text-[11px] tracking-tight">
             {label}
           </label>
         )}
