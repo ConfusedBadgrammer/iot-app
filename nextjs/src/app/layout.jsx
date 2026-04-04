@@ -21,7 +21,7 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: 'IoT App',
+  title: 'Ambient',
 }
 
 export default function RootLayout({ children }) {

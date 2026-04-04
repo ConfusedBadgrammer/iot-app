@@ -53,8 +53,20 @@ export default function Climate() {
       });
   }, [selectedMac]);
 
-  if (!sensorData && !weatherData) {
-    return <div>One second bruh...</div>;
+  if (!sensorData) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative w-16 h-16">
+            <div className="absolute inset-0 rounded-full border-2 border-[#121B2F]" />
+            <div className="absolute inset-0 rounded-full border-2 border-t-[var(--color-accent)] animate-spin" />
+          </div>
+          <span className="text-[#94A3B9] text-sm font-label tracking-tight animate-pulse">
+            LOADING SENSOR DATA
+          </span>
+        </div>
+      </div>
+    );
   }
   return (
     <div className="flex flex-col gap-6 flex-1">
