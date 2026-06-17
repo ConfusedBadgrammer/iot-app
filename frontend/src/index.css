@@ -9,13 +9,10 @@
   }
 }
 
-* {
-  outline: 1px solid red;
-}
-
-@theme {
+@theme inline {
   --color-background: #0b1326;
   --color-on-background: #fffefe;
+  --color-accent: #00dbf2;
 
   --font-headline: 'Space Grotesk Variable', sans-serif;
   --font-body: 'Manrope Variable', sans-serif;

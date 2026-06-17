@@ -21,6 +21,11 @@ export class MainRouter {
       this.sensorController.post(req, res);
     });
 
+    this.router.get("/sensor/:device_id/latest", (req, res) => {
+      console.log(req.params.device_id);
+      this.sensorController.latest(req, res);
+    });
+
     this.router.get("/sensor/:device_id/", (req, res) => {
       console.log(req.params.device_id);
       this.sensorController.get(req, res);

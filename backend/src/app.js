@@ -20,7 +20,7 @@ export class App {
     const connection = await testDBConnection();
 
     if (connection) {
-      this.app.listen(3000, () =>
+      this.app.listen(process.env.PORT || 3000, () =>
         console.log(
           new Date().toLocaleTimeString() +
             ` - Server running on port http://localhost:${process.env.PORT}/api/v1/`

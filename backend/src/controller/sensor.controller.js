@@ -17,6 +17,25 @@ export class SensorController {
     return res.sendStatus(200);
   }
 
+  async latest(req, res) {
+    const { device_id } = req.params;
+
+    const { data, error } = await supabase
+      .from("sensor_readings")
+      .select("temperature, humidity, co2, created_at")
+      .eq("device_id", device_id)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error) {
+      console.log(error);
+      return res.status(500).json({ error: error.message });
+    }
+
+    return res.json(data);
+  }
+
   async get(req, res) {
     const { device_id } = req.params;
     const { from, to } = req.query;
