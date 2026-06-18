@@ -11,6 +11,7 @@ export class App {
   }
 
   setupRoutes() {
+    this.app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
     const router = new MainRouter();
     this.app.use("/api/v1", router.getRouter());
     console.log("Routes Initialised");
